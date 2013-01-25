@@ -1,0 +1,13 @@
+Start mongo server, then run mongo
+$ mongo d
+$ mongo
+
+Create a new db
+> use CheeseApp
+
+Create a 'dictionary'
+> db.users.insert({stuff}) ('users' can be anything)
+
+Update a 'dict'
+> db.users.update({'name':'mike'}, {$set{'class':2014}})
+
