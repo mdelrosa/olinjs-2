@@ -5,21 +5,11 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , User = require('./models/user')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
-
-var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGOLAB_URI || 'localhost');
-
-var schema = mongoose.Schema({ name: 'string' });
-var Cat = mongoose.model('Dog', schema);
-
-var kitty = new Cat({ name: 'Zildjian' });
-kitty.save(function (err) {
-  if (err) // ...
-  console.log('meow');
-});
+  , path = require('path')
+  , mongoose = require('mongoose');
 
 var app = express();
 
@@ -41,15 +31,13 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/users/new', user.new);
-app.get('/kitten/new', function(req,res){
-  var kitty = new Cat({ name: 'Zildjian' });
-kitty.save(function (err) {
-  if (err) // ...
-  console.log('meow');
-});
-  });
+
+// this should really be a post, but we'll cover that later
+// once we get to AJAX
+app.get('/users/new', user.create);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+

@@ -30,8 +30,7 @@ http.createServer(function(request, response) {
 }).listen(8888);
 ```
 
-Let's write the equivalent code in Express. First, run `git clone https://github.com/olinjs/olinjs-2.git` as in the last
-lesson to clone this repository. Next, in the `olinjs-2/` folder, run the command `npm install`. (If this triggers lots of
+Let's write the equivalent code in Express. First, fork the repository to your account as we did in the last room. Then `git clone https://github.com/<YOUR GITHUB USERNAME>/olinjs-2.git` as in the last lesson to clone this repository. Next, in the `olinjs-2/` folder, run the command `npm install`. (If this triggers lots of
 lines with errors, run `sudo npm install` instead, or send us an email).
 
 Next, create a file named `app.js` in that folder and paste in the following:
@@ -89,7 +88,7 @@ Before we talk about routing, let's talk a bit about clients vs servers. For our
 
 Routing is the process of serving up different pages for different urls. When you go to www.mycoolsite.com/ your computer goes out on the internet and asks mycoolsite's server for a page. Mycoolsite's server then sees that request and sends back information to your computer in the form of html. This html is then rendered on your browser.
 
-If you go to www.mycoolsite.com/olin mycoolsite's servers obviously can't send you the same data it sent www.mycoolsite.com/. So mycoolsite's servers needs to differentiate ```/``` from ```/olin```. This process is known as routing.
+If you go to www.mycoolsite.com/ mycoolsite's servers obviously can't send you the same data it sent www.mycoolsite.com/olin. So mycoolsite's servers needs to differentiate ```/``` from ```/olin```. This process is known as routing.
 
 In the Node beginner book, we did routing through something like 
 
@@ -98,27 +97,27 @@ var pathname = url.parse(request.url).pathname;
 route(handle, pathname, response, request);
 ```
 
-Now, instead of us writing parsers for the route, in Express we can do something like 
+Instead of writing code ourselves to handle the route, Express can do this for us:
 
 ```js
-app.get('/', function(req, res){
+app.get('/', function (req, res){
   res.send('hello world');
 });
 
-app.get('/olin', function(req, res){
+app.get('/olin', function (req, res){
   res.send('hello olin');
 });
 ```
 
-These two routes are for the index page (/) and the olin page (/olin). 
+These two routes we created are for the index page (/) and the olin page (/olin). 
 
-So what does `app.get` do? It tells express that we want to execute the second argument (the anonymous function) every time the server has a `GET` request at that specific route. The `GET` request is specified by the http standard. There are many more than just the `GET` request, and you can [view the entire list on wikipedia](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods). But for now, all you need to know are
+So what does `app.get` do? It tells express that every time that particular route (the first string argument) receives a `HTTP GET` request, we want to execute the anonymous function (the second argument). `HTTP` lets you perform different *types* of requests for a particular route, and these types are called **methods**. `GET` is just one of the methods you can perform, and is the most common (every time request an image or a script for example). You can [view the other types of HTTP methods on wikipedia](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods). But for now, let's only consider these two:
 
-* `GET` returns a resource (such as a message or an html page). This is used for when your browser wants to read information from a server.
+* `GET` returns a resource (such as an image or an html page). This is used for when your browser wants to read information from a server.
 * `POST` is used for when your browser wants to send information over to the server. For example, when you fill out an online form, that data is sent over to the server as `POST` data.
 
 
-###Generating an Express app
+###Automatically Generate an Express app
 
 Express also comes with a set of nifty tools to get you started. You can make a new Express app by going into a directory and running 
 
@@ -184,7 +183,7 @@ app.configure(function(){
 
 ## Mongo
 
-[MongoDB](http://en.wikipedia.org/wiki/Mongodb) is a NoSQL database system that stores data in a form similar to JSON. We'll be using it as our primary method of storage.
+[MongoDB](http://en.wikipedia.org/wiki/Mongodb) is a database (system for storing data every time you run an application) that stores data in a form like JSON. We'll be using it as our primary method of storage.
 
 In order to use Mongo locally, we need to start up the Mongo [daemon](http://en.wikipedia.org/wiki/Daemon_(computing). Open up your terminal and type this in
 ```
@@ -217,7 +216,7 @@ switched to db test
 > db.users.find()
 { "_id" : ObjectId("51007865e481634f390b162f"), "name" : "alice" }
 > db.users.insert({'name': 'bob', 'grade': 'A', 'assignments':[{1: 'A', 2: 'B'}]})
-> db.items.find()
+> db.users.find()
 { "_id" : ObjectId("51007865e481634f390b162f"), "name" : "alice" }
 { "_id" : ObjectId("510078bee481634f390b1630"), "name" : "bob", "grade" : "A", 
   "assignments" : [ { "1" : "A", "2" : "B" } ] }
